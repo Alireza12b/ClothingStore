@@ -19,6 +19,7 @@
                         <img src="{{ asset('assets/img/' . ($product->image ?? 'default.jpg')) }}" class="w-full h-48 object-cover" alt="{{ $product->name }}">
                         <div class="p-4 text-right">
                             <h3 class="font-semibold text-lg text-gray-800">{{ $product->name }}</h3>
+                            <p class="text-sm font-bold text-gray-650">{{ $product->category->name }}</p>
                             <p class="text-blue-600 text-sm mt-1">
                                 از {{ number_format($product->variants->min('price')) }} تومان
                             </p>

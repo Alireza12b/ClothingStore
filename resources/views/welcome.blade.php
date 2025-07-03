@@ -10,10 +10,10 @@
                     <p class="text-gray-600 mb-6 text-lg">با جدیدترین ترندهای فصل آشنا شوید و استایل خود را متحول کنید
                     </p>
                     <div class="flex space-x-3 space-x-reverse">
-                        <a href="#"
+                        <a href="/products"
                             class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-300 font-medium">مشاهده
                             محصولات</a>
-                        <a href="#"
+                        <a href="/about-us"
                             class="border border-blue-600 text-blue-600 px-6 py-3 rounded-full hover:bg-blue-50 transition duration-300 font-medium">درباره
                             ما</a>
                     </div>
@@ -42,9 +42,9 @@
                             <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
                                 @php
                                     $icon = match ($category->name) {
-                                        'لباس مردانه' => 'fa-tshirt',
-                                        'لباس زنانه' => 'fa-female',
-                                        'لباس بچه‌گانه' => 'fa-child',
+                                        'لباس‌های مردانه' => 'fa-tshirt',
+                                        'لباس‌های زنانه' => 'fa-female',
+                                        'لباس‌های بچه‌گانه' => 'fa-child',
                                         'کفش و کتانی' => 'fa-shoe-prints',
                                         default => 'fa-box',
                                     };
@@ -90,6 +90,7 @@
                                     <h3 class="font-bold text-gray-800">{{ $product->name }}</h3>
                                 </div>
                             </a>
+                            <p class="text-sm font-bold text-gray-650">{{ $product->category->name }}</p>
                             <p class="text-gray-600 text-sm mb-3">{{ Str::limit($product->description, 60) }}</p>
                             @php
                                 $minPrice = $product->variants->min('price');

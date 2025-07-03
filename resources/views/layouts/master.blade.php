@@ -63,23 +63,23 @@
                             <ul class="flex space-x-6 space-x-reverse">
                                 <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                                 </li>
-                                <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
+                                <li><a href="/products" class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                                 </li>
-                                <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium">تماس با
+                                <li><a href="/contact-us" class="text-gray-800 hover:text-blue-600 font-medium">تماس با
                                         ما</a>
                                 </li>
-                                <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium">درباره
+                                <li><a href="/about-us" class="text-gray-800 hover:text-blue-600 font-medium">درباره
                                         ما</a>
                                 </li>
                             </ul>
                         </nav>
                         <div class="flex items-center space-x-3 space-x-reverse">
-                            <a href="#" class="text-gray-800 hover:text-blue-600 relative">
+                            <a href="/cart" class="text-gray-800 hover:text-blue-600 relative">
                                 <i class="fas fa-shopping-cart text-xl"></i>
                                 <span
                                     class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
                             </a>
-                            <a href="#" class="text-gray-800 hover:text-blue-600">
+                            <a href="/me" class="text-gray-800 hover:text-blue-600">
                                 <i class="fas fa-user text-xl"></i>
                             </a>
                         </div>
@@ -98,16 +98,14 @@
                             class="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <ul class="space-y-3">
-                        <li><a href="#" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
+                        <li><a href="/" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                         </li>
-                        <li><a href="#"
+                        <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                         </li>
-                        <li><a href="#"
-                                class="block py-2 text-gray-800 hover:text-blue-600 font-medium">دسته‌بندی‌ها</a></li>
-                        <li><a href="#" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس با
+                        <li><a href="/contact-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس با
                                 ما</a></li>
-                        <li><a href="#" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
+                        <li><a href="/about-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
                                 ما</a>
                         </li>
                     </ul>
@@ -138,18 +136,18 @@
                         <h3 class="text-lg font-bold mb-4">دسترسی سریع</h3>
                         <ul class="space-y-2">
                             <li><a href="/" class="text-gray-400 hover:text-white">خانه</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">محصولات</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">تماس با ما</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">درباره ما</a></li>
+                            <li><a href="/products" class="text-gray-400 hover:text-white">محصولات</a></li>
+                            <li><a href="/contact-us" class="text-gray-400 hover:text-white">تماس با ما</a></li>
+                            <li><a href="/about-us" class="text-gray-400 hover:text-white">درباره ما</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h3 class="text-lg font-bold mb-4">خدمات مشتریان</h3>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-400 hover:text-white">ورود</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">سبد خرید</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">پنل کاربری</a></li>
+                            <li><a href="/login" class="text-gray-400 hover:text-white">ورود</a></li>
+                            <li><a href="/cart" class="text-gray-400 hover:text-white">سبد خرید</a></li>
+                            <li><a href="/me" class="text-gray-400 hover:text-white">پنل کاربری</a></li>
                         </ul>
                     </div>
 
@@ -169,7 +167,7 @@
 
                 <div class="border-t border-gray-700 pt-6">
                     <div class="flex flex-col md:flex-row justify-between items-center">
-                        <p class="text-gray-400 mb-4 md:mb-0">© ۱۴۰۲ تمامی حقوق برای فروشگاه لباس محفوظ است.</p>
+                        <p class="text-gray-400 mb-4 md:mb-0">© 1404 تمامی حقوق برای فروشگاه لباس محفوظ است.</p>
                         <div class="flex space-x-4 space-x-reverse">
 
                         </div>
