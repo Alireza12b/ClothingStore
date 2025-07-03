@@ -13,4 +13,10 @@ class ProductController extends Controller
         $product = Product::with(['variants.color', 'variants.size'])->findOrFail($id);
         return view('products.show', compact('product'));
     }
+
+    public function index()
+    {
+        $products = Product::latest()->paginate(12);
+        return view('products.products', compact('products'));
+    }
 }
