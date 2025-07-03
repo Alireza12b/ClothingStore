@@ -51,7 +51,7 @@ class ProductVariantsSeeder extends Seeder
         ProductVariant::create([
             'product_id' => '1', 
             'color_id' => '6',
-            'size_id' => '7',
+            'size_id' => '6',
             'price' => '300000',
             'quantity' => '4',
         ]);

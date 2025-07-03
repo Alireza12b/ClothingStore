@@ -4,6 +4,10 @@ body {
     font-family: 'Vazirmatn', sans-serif;
 }
 
+select option {
+    font-size: 16px;
+}
+
 .hero-section {
     background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
 }

@@ -35,52 +35,31 @@
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <a href="">
-                    <div
-                        class="category-card bg-gray-50 rounded-lg overflow-hidden shadow-sm text-center p-6 hover:shadow-md">
-                        <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
-                            <i class="fas fa-tshirt text-blue-600 text-2xl"></i>
+                @foreach ($categories as $category)
+                    <a href="{{ route('category.products', $category->id) }}">
+                        <div
+                            class="category-card bg-gray-50 rounded-lg overflow-hidden shadow-sm text-center p-6 hover:shadow-md">
+                            <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
+                                @php
+                                    $icon = match ($category->name) {
+                                        'لباس مردانه' => 'fa-tshirt',
+                                        'لباس زنانه' => 'fa-female',
+                                        'لباس بچه‌گانه' => 'fa-child',
+                                        'کفش و کتانی' => 'fa-shoe-prints',
+                                        default => 'fa-box',
+                                    };
+                                @endphp
+                                <i class="fas {{ $icon }} text-blue-600 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">{{ $category->name }}</h3>
+                            <p class="text-gray-600 text-sm">{{ $category->products_count }} محصول</p>
                         </div>
-                        <h3 class="font-bold text-lg mb-2">لباس مردانه</h3>
-                        <p class="text-gray-600 text-sm">۱۵۰ محصول</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div
-                        class="category-card bg-gray-50 rounded-lg overflow-hidden shadow-sm text-center p-6 hover:shadow-md">
-                        <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
-                            <i class="fas fa-female text-blue-600 text-2xl"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">لباس زنانه</h3>
-                        <p class="text-gray-600 text-sm">۲۱۰ محصول</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div
-                        class="category-card bg-gray-50 rounded-lg overflow-hidden shadow-sm text-center p-6 hover:shadow-md">
-                        <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
-                            <i class="fas fa-child text-blue-600 text-2xl"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">لباس بچه‌گانه</h3>
-                        <p class="text-gray-600 text-sm">۹۵ محصول</p>
-                    </div>
-                </a>
-
-                <a href="">
-                    <div
-                        class="category-card bg-gray-50 rounded-lg overflow-hidden shadow-sm text-center p-6 hover:shadow-md">
-                        <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
-                            <i class="fas fa-shoe-prints text-blue-600 text-2xl"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">کفش و کتانی</h3>
-                        <p class="text-gray-600 text-sm">۷۸ محصول</p>
-                    </div>
-                </a>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>
+
 
     <!-- Featured Products -->
     <section class="py-12 bg-gray-50">
