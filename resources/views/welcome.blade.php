@@ -96,32 +96,41 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
 
-                <!-- Product 1 -->
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
-                    <a href="#">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80"
-                                alt="Product 1" class="w-full h-64 object-cover">
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <a href="#">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-bold text-gray-800">پیراهن مردانه اسلیم</h3>
+                <!-- Products -->
+                @foreach ($latestProducts as $product)
+                    <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <a href="{{ route('products.show', $product->id) }}">
+                            <div class="relative">
+                                <img src="{{ asset('assets/img/' . $product->image ?? 'default.jpg') }}"
+                                    alt="{{ $product->name }}" class="w-full h-64 object-cover">
                             </div>
                         </a>
-                        <p class="text-gray-600 text-sm mb-3">پیراهن مردانه رسمی با جنس کتان</p>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-blue-600 font-bold block">۲۳۲,۰۰۰ تومان</span>
+                        <div class="p-4">
+                            <a href="{{ route('products.show', $product->id) }}">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-bold text-gray-800">{{ $product->name }}</h3>
+                                </div>
+                            </a>
+                            <p class="text-gray-600 text-sm mb-3">{{ Str::limit($product->description, 60) }}</p>
+                            @php
+                                $minPrice = $product->variants->min('price');
+                            @endphp
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-blue-600 font-bold block">
+                                        {{ number_format($minPrice) }} تومان
+                                    </span>
+                                </div>
+                                <a href="{{ route('products.show', $product->id) }}">
+                                    <button
+                                        class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-blue-200">
+                                        <i class="fas fa-shopping-cart text-sm"></i>
+                                    </button>
+                                </a>
                             </div>
-                            <button
-                                class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-blue-200">
-                                <i class="fas fa-shopping-cart text-sm"></i>
-                            </button>
                         </div>
                     </div>
-                </div>
+                @endforeach
 
 
 
