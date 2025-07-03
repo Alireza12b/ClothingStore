@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $category = Category::with(['products' => function ($query) {
-            $query->latest()->paginate(12);
-        }])->findOrFail($id);
-        $products = $category->products()->latest()->paginate(12);
+        $category = Category::findOrFail($id);
+
+        $query = $category->products()->with('variants');
+
+        if ($search = $request->query('search')) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        $products = $query->latest()->paginate(12)->withQueryString();
 
         return view('products.products', compact('products', 'category'));
     }

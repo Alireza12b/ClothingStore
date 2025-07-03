@@ -48,22 +48,26 @@
 
                     <!-- Search Bar -->
                     <div class="hidden md:block w-1/3">
-                        <div class="relative">
-                            <input type="text" placeholder="جستجوی محصولات..."
-                                class="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <button class="absolute left-3 top-2 text-gray-500">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <form method="GET" action="{{ route('products.index') }}">
+                            <div class="relative">
+                                <input type="text" name="search" value="{{ request('search') }}"
+                                    placeholder="جستجوی محصولات..."
+                                    class="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <button type="submit" class="absolute left-3 top-2 text-gray-500">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
                     <!-- Navigation and Cart -->
                     <div class="flex items-center space-x-4 space-x-reverse">
                         <nav class="hidden md:block">
                             <ul class="flex space-x-6 space-x-reverse">
-                                <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium">خانه</a>
+                                <li><a href="/" class="text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                                 </li>
-                                <li><a href="/products" class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
+                                <li><a href="/products"
+                                        class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                                 </li>
                                 <li><a href="/contact-us" class="text-gray-800 hover:text-blue-600 font-medium">تماس با
                                         ما</a>
@@ -103,7 +107,8 @@
                         <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                         </li>
-                        <li><a href="/contact-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس با
+                        <li><a href="/contact-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس
+                                با
                                 ما</a></li>
                         <li><a href="/about-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
                                 ما</a>
