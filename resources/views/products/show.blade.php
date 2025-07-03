@@ -14,6 +14,7 @@
             <!-- Product Details -->
             <div class="text-right">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $product->name }}</h2>
+                <h3 class="text-l font-bold text-gray-700 mb-4">{{ $product->category->name }}</h3>
                 <p class="text-gray-600 mb-4">{{ $product->description }}</p>
 
                 @php
