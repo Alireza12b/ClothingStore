@@ -106,8 +106,6 @@
                             @guest
                                 <a href="/login" class="text-gray-800 hover:text-blue-600 relative">
                                     <i class="fas fa-shopping-cart text-xl"></i>
-                                    <span
-                                        class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
                                 </a>
                                 <a href="/login" class="text-gray-800 hover:text-blue-600">
                                     <i class="fas fa-user text-xl"></i>
