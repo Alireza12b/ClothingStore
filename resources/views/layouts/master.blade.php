@@ -16,6 +16,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     </head>
 
     <body class="bg-gray-50">
@@ -80,7 +81,7 @@
                                 @endguest
                                 @auth
                                     @if (auth()->user()->role === 'admin')
-                                        <li><a href="/login" class="text-gray-800 hover:text-blue-600 font-medium">پنل
+                                        <li><a href="/manage" class="text-gray-800 hover:text-blue-600 font-medium">پنل
                                                 مدیریت</a>
                                         </li>
                                     @endif
@@ -132,13 +133,21 @@
                             <li><a href="/login" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
                             </li>
                         @endguest
+                        @auth
+                            @if (auth()->user()->role === 'admin')
+                                <li><a href="/manage"
+                                        class="block py-2 text-gray-800 hover:text-blue-600 font-medium">پنل مدیریت</a>
+                                </li>
+                            @endif
+                        @endauth
                         <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                         </li>
                         <li><a href="/contact-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس
                                 با
                                 ما</a></li>
-                        <li><a href="/about-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
+                        <li><a href="/about-us"
+                                class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
                                 ما</a>
                         </li>
                         @auth

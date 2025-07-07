@@ -27,6 +27,7 @@
             border-color: #3b82f6;
         }
     </style>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
 </head>
 
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">

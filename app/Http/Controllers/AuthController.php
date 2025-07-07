@@ -48,7 +48,10 @@ class AuthController extends Controller
         $remember = $request->has('remember');
 
         if (Auth::attempt($request->only('email', 'password'), $remember)) {
-            return redirect('/')->with('success', 'ورود با موفقیت انجام شد.');
+            $userName = Auth::user()->name;
+
+            return redirect('/')
+                ->with('success', "ورود با موفقیت انجام شد. خوش آمدی، {$userName} عزیز!");
         }
 
         return back()->withErrors([
