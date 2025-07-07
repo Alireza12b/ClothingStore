@@ -6,7 +6,7 @@ use App\Models\ProductVariant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductVariantsSeeder extends Seeder
+class ProductVariantSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -99,27 +99,55 @@ class ProductVariantsSeeder extends Seeder
         ]);
         ProductVariant::create([
             'product_id' => '5', 
+            'color_id' => '6',
+            'size_id' => '1',
+            'price' => '100000',
+            'quantity' => '4',
+        ]);
+        ProductVariant::create([
+            'product_id' => '5', 
+            'color_id' => '6',
+            'size_id' => '1',
+            'price' => '100000',
+            'quantity' => '4',
+        ]);
+        ProductVariant::create([
+            'product_id' => '6', 
+            'color_id' => '6',
+            'size_id' => '1',
+            'price' => '100000',
+            'quantity' => '4',
+        ]);
+        ProductVariant::create([
+            'product_id' => '6', 
+            'color_id' => '6',
+            'size_id' => '1',
+            'price' => '100000',
+            'quantity' => '4',
+        ]);
+        ProductVariant::create([
+            'product_id' => '7', 
             'color_id' => '1',
             'size_id' => '35',
             'price' => '2000000',
             'quantity' => '7',
         ]);
         ProductVariant::create([
-            'product_id' => '5', 
+            'product_id' => '7', 
             'color_id' => '1',
             'size_id' => '30',
             'price' => '5000000',
             'quantity' => '4',
         ]);
         ProductVariant::create([
-            'product_id' => '6', 
+            'product_id' => '8', 
             'color_id' => '4',
             'size_id' => '27',
             'price' => '1000000',
             'quantity' => '2',
         ]);
         ProductVariant::create([
-            'product_id' => '6', 
+            'product_id' => '8', 
             'color_id' => '6',
             'size_id' => '37',
             'price' => '1000000',

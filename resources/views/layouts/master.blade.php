@@ -66,6 +66,8 @@
                             <ul class="flex space-x-6 space-x-reverse">
                                 <li><a href="/" class="text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                                 </li>
+                                <li><a href="/login" class="text-gray-800 hover:text-blue-600 font-medium">ورود</a>
+                                </li>
                                 <li><a href="/products"
                                         class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                                 </li>
@@ -103,6 +105,8 @@
                     </div>
                     <ul class="space-y-3">
                         <li><a href="/" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
+                        </li>
+                        <li><a href="/login" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
                         </li>
                         <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>

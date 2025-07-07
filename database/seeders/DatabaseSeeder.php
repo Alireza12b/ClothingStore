@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
         ]);
         $this->call([
-            ProductVariantsSeeder::class,
+            ProductVariantSeeder::class,
         ]);
+        $this->call(AdminSeeder::class);
     }
 }
