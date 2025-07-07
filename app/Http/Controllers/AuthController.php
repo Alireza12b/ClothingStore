@@ -48,7 +48,7 @@ class AuthController extends Controller
         $remember = $request->has('remember');
 
         if (Auth::attempt($request->only('email', 'password'), $remember)) {
-            return redirect()->intended('/');
+            return redirect('/')->with('success', 'ورود با موفقیت انجام شد.');
         }
 
         return back()->withErrors([
@@ -59,6 +59,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect('/')->with('success', 'با موفقیت خارج شدید.');
     }
 }

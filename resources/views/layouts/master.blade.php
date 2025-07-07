@@ -64,14 +64,27 @@
                         </form>
                     </div>
 
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+
                     <!-- Navigation and Cart -->
                     <div class="flex items-center space-x-4 space-x-reverse">
                         <nav class="hidden md:block">
                             <ul class="flex space-x-6 space-x-reverse">
                                 <li><a href="/" class="text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                                 </li>
-                                <li><a href="/login" class="text-gray-800 hover:text-blue-600 font-medium">ورود</a>
-                                </li>
+                                @guest
+                                    <li><a href="/login" class="text-gray-800 hover:text-blue-600 font-medium">ورود</a>
+                                    </li>
+                                @endguest
+                                @auth
+                                    @if (auth()->user()->role === 'admin')
+                                        <li><a href="/login" class="text-gray-800 hover:text-blue-600 font-medium">پنل
+                                                مدیریت</a>
+                                        </li>
+                                    @endif
+                                @endauth
                                 <li><a href="/products"
                                         class="text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                                 </li>
@@ -81,6 +94,11 @@
                                 <li><a href="/about-us" class="text-gray-800 hover:text-blue-600 font-medium">درباره
                                         ما</a>
                                 </li>
+                                @auth
+                                    <li><a href="#" class="text-gray-800 hover:text-blue-600 font-medium"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">خروج</a>
+                                    </li>
+                                @endauth
                             </ul>
                         </nav>
                         <div class="flex items-center space-x-3 space-x-reverse">
@@ -110,8 +128,10 @@
                     <ul class="space-y-3">
                         <li><a href="/" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                         </li>
-                        <li><a href="/login" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
-                        </li>
+                        @guest
+                            <li><a href="/login" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
+                            </li>
+                        @endguest
                         <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                         </li>
@@ -121,6 +141,11 @@
                         <li><a href="/about-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">درباره
                                 ما</a>
                         </li>
+                        @auth
+                            <li><a href="#" class="block py-2 text-gray-800 hover:text-blue-600 font-medium"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">خروج</a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
@@ -192,6 +217,9 @@
         <!-- JavaScript -->
         @stack('ShowProductScripts')
         <script src="/assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+        @include('partials.alerts')
     </body>
 
     </html>
