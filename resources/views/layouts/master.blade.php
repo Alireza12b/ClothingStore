@@ -4,7 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>فروشگاه مد و لباس | خانه</title>
+        <title>
+            @hasSection('title')
+                @yield('title') | فروشگاه لباس@elseفروشگاه لباس
+            @endif
+        </title>
         <!-- Bootstrap RTL CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
         <!-- Tailwind CSS -->

@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'خانه')
 @section('MyContentArea')
     <!-- Hero Section -->
     <section class="hero-section py-16">

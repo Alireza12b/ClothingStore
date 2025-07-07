@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', $product->name)
 @section('MyContentArea')
     <div class="container mx-auto px-4 py-10">
         <div class="grid md:grid-cols-2 gap-8">
