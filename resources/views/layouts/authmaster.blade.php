@@ -32,6 +32,8 @@
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
 
     @yield('MyContentArea')
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @include('partials.alerts')
 </body>
 
