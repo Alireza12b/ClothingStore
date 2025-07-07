@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class ProductVariant extends Model
 {
     protected $table = 'product_variants';
-    
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
     public function color()
     {
         return $this->belongsTo(Color::class);

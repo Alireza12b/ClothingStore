@@ -82,9 +82,16 @@
                         class="readonly w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         min="1" value="1" onkeydown="return false" disabled>
                 </div>
-                <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-                    افزودن به سبد خرید
-                </button>
+                <form method="POST" action="{{ route('cart.add') }}">
+                    @csrf
+                    <input type="hidden" name="variant_id" id="selectedVariantId">
+                    <input type="hidden" name="quantity" id="finalQuantityInput" value="1">
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                        افزودن به سبد خرید
+                    </button>
+                </form>
+
             </div>
         </div>
     </div>
@@ -203,11 +210,16 @@
                 if (parseInt(quantityInput.value) > selectedVariant.quantity) {
                     quantityInput.value = selectedVariant.quantity;
                 }
+                document.getElementById('selectedVariantId').value = selectedVariant.id;
+                document.getElementById('finalQuantityInput').value = quantityInput.value;
             } else {
                 variantPrice.classList.add('hidden');
                 variantQuantity.classList.add('hidden')
                 quantityInput.disabled = true;
             }
         }
+        quantityInput.addEventListener('input', () => {
+            document.getElementById('finalQuantityInput').value = quantityInput.value;
+        });
     </script>
 @endpush

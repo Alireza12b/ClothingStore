@@ -103,14 +103,32 @@
                             </ul>
                         </nav>
                         <div class="flex items-center space-x-3 space-x-reverse">
-                            <a href="/cart" class="text-gray-800 hover:text-blue-600 relative">
-                                <i class="fas fa-shopping-cart text-xl"></i>
-                                <span
-                                    class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
-                            </a>
-                            <a href="/me" class="text-gray-800 hover:text-blue-600">
-                                <i class="fas fa-user text-xl"></i>
-                            </a>
+                            @guest
+                                <a href="/login" class="text-gray-800 hover:text-blue-600 relative">
+                                    <i class="fas fa-shopping-cart text-xl"></i>
+                                    <span
+                                        class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
+                                </a>
+                                <a href="/login" class="text-gray-800 hover:text-blue-600">
+                                    <i class="fas fa-user text-xl"></i>
+                                </a>
+                            @endguest
+                            @auth
+                                <a href="/cart" class="text-gray-800 hover:text-blue-600 relative">
+                                    <i class="fas fa-shopping-cart text-xl"></i>
+                                    @if ($cartItemCount > 0)
+                                        <span
+                                            class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                            {{ $cartItemCount }}
+                                        </span>
+                                    @endif
+                                </a>
+
+                                <a href="#" onclick="toggleProfileModal(event)"
+                                    class="text-gray-800 hover:text-blue-600">
+                                    <i class="fas fa-user text-xl"></i>
+                                </a>
+                            @endauth
                         </div>
                         <button class="md:hidden text-gray-800" id="mobileMenuButton">
                             <i class="fas fa-bars text-xl"></i>
@@ -127,23 +145,26 @@
                             class="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <ul class="space-y-3">
-                        <li><a href="/" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
+                        <li><a href="/"
+                                class="block py-2 text-gray-800 hover:text-blue-600 font-medium">خانه</a>
                         </li>
                         @guest
-                            <li><a href="/login" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
+                            <li><a href="/login"
+                                    class="block py-2 text-gray-800 hover:text-blue-600 font-medium">ورود</a>
                             </li>
                         @endguest
                         @auth
                             @if (auth()->user()->role === 'admin')
-                                <li><a href="/manage"
-                                        class="block py-2 text-gray-800 hover:text-blue-600 font-medium">پنل مدیریت</a>
+                                <li><a href="/manage" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">پنل
+                                        مدیریت</a>
                                 </li>
                             @endif
                         @endauth
                         <li><a href="/products"
                                 class="block py-2 text-gray-800 hover:text-blue-600 font-medium">محصولات</a>
                         </li>
-                        <li><a href="/contact-us" class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس
+                        <li><a href="/contact-us"
+                                class="block py-2 text-gray-800 hover:text-blue-600 font-medium">تماس
                                 با
                                 ما</a></li>
                         <li><a href="/about-us"
@@ -223,12 +244,61 @@
             </div>
         </footer>
 
+        <!-- Profile Edit Modal -->
+        @auth
+            <div id="profileModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+                <div class="bg-white w-full max-w-md p-6 rounded-lg relative">
+                    <button onclick="toggleProfileModal()" class="absolute left-3 top-3 text-gray-500 hover:text-red-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h3 class="text-xl font-semibold mb-4 text-right">ویرایش اطلاعات</h3>
+                    <form method="POST" action="{{ route('user.update') }}" class="space-y-4 text-right">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <label class="block text-sm font-medium">نام</label>
+                            <input type="text" name="name" value="{{ auth()->user()->name }}"
+                                class="w-full border rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">ایمیل</label>
+                            <input type="email" name="email" value="{{ auth()->user()->email }}"
+                                class="w-full border rounded px-4 py-2 focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">شماره تماس</label>
+                            <input type="text" name="phone" value="{{ auth()->user()->phone }}"
+                                class="w-full border rounded px-4 py-2 focus:ring-2 focus:ring-blue-500"
+                                style="direction: ltr;">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">آدرس</label>
+                            <textarea name="address" rows="2" class="w-full border rounded px-4 py-2 focus:ring-2 focus:ring-blue-500">{{ auth()->user()->address }}</textarea>
+                        </div>
+                        <div class="text-left">
+                            <button type="submit"
+                                class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">ذخیره</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endauth
+
+        @include('partials.alerts')
+
         <!-- JavaScript -->
         @stack('ShowProductScripts')
         <script src="/assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        <script>
+            function toggleProfileModal(event) {
+                if (event) event.preventDefault();
+                const modal = document.getElementById('profileModal');
+                modal.classList.toggle('hidden');
+            }
+        </script>
 
-        @include('partials.alerts')
     </body>
 
     </html>
