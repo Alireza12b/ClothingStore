@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
 });
 Route::middleware(['auth', AdminMiddleware::class])->prefix('/manage')->group(function () {
-    Route::get('/users', [AdminController::class, 'index'])->name('manage.users');
+    Route::get('/', [AdminController::class, 'show'])->name('manage.show');
+    Route::get('/users', [AdminController::class, 'getAll'])->name('manage.users');
     Route::put('/users/{user}', [AdminController::class, 'update'])->name('manage.users.update');
     Route::delete('/users/{user}', [AdminController::class, 'delete'])->name('manage.users.delete');
 });

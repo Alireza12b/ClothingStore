@@ -2,6 +2,15 @@
 @section('title', 'مدیریت کاربران')
 @section('MyContentArea')
 
+    <style>
+        #editModal:not(.hidden),
+        #deleteModal:not(.hidden) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
     <main class="flex-1 p-6">
         <div class="bg-white rounded-xl shadow-sm p-6">
             <div class="flex justify-between items-center mb-6">

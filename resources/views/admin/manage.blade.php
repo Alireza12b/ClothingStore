@@ -1,5 +1,5 @@
 @extends('layouts.adminmaster')
-@section('title', $product->name)
+@section('title', 'پنل مدیریت')
 
 @section('MyContentArea')
 @endsection

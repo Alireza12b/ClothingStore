@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index(Request $request)
+    public function show(){
+        return view('admin.manage');
+    }
+
+    public function getAll(Request $request)
     {
         $search = $request->query('search');
 
