@@ -86,16 +86,10 @@
                     <h1 class="text-xl font-bold text-gray-800">پنل مدیریت کاربران</h1>
                 </div>
                 <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="relative">
-                        <button class="p-2 rounded-full hover:bg-gray-100">
-                            <i class="fas fa-bell text-gray-600"></i>
-                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                        </button>
-                    </div>
                     <div class="flex items-center space-x-2 space-x-reverse">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Profile"
-                            class="w-8 h-8 rounded-full">
-                        <span class="font-medium">مدیر سیستم</span>
+                        <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile"
+                            class="w-12 h-8 rounded-full">
+                        <span class="font-medium">{{ auth()->check() ? auth()->user()->name : 'مدیر سیستم' }}</span>
                     </div>
                 </div>
             </div>
@@ -109,7 +103,7 @@
                     <nav class="mt-6">
                         <div class="space-y-2">
                             <a href="/manage/users"
-                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg bg-primary-50 text-primary-700">
+                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
                                 <i class="fas fa-users"></i>
                                 <span>مدیریت کاربران</span>
                             </a>
@@ -117,16 +111,6 @@
                                 class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
                                 <i class="fas fa-chart-line"></i>
                                 <span>مدیریت محصولات</span>
-                            </a>
-                            <a href="#"
-                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
-                                <i class="fas fa-cog"></i>
-                                <span>تنظیمات</span>
-                            </a>
-                            <a href="#"
-                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
-                                <i class="fas fa-question-circle"></i>
-                                <span>راهنما</span>
                             </a>
                         </div>
                     </nav>
