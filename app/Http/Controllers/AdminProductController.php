@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class AdminProductController extends Controller
 {
-    // فهرست
     public function index(Request $request)
     {
         $products = Product::with(['category', 'variants'])
@@ -25,48 +26,73 @@ class AdminProductController extends Controller
         ]);
     }
 
-    // دیتا برای مودال ویرایش (json)
     public function showJson(Product $product)
     {
         $product->load(['variants']);
         return response()->json($product);
     }
 
-    // بروزرسانی محصول و واریانت‌ها
-    public function update(Request $req, Product $product)
+
+    public function update(Request $request, Product $product)
     {
-        $req->validate([
-            'name' => 'required',
-            'category_id' => 'required|exists:categories,id',
-            'description' => 'nullable',
-            'variants.price.*' => 'required|numeric|min:0',
-            'variants.quantity.*' => 'required|integer|min:0',
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => ['nullable', Rule::exists('categories', 'id')],
+
+            'variants.color_id'  => 'required|array',
+            'variants.size_id'   => 'required|array',
+            'variants.price'     => 'required|array',
+            'variants.quantity'  => 'required|array',
+            'variants.id'        => 'array',
+
+            'variants.color_id.*' => ['required', Rule::exists('colors', 'id')],
+            'variants.size_id.*'  => ['required', Rule::exists('sizes', 'id')],
+            'variants.price.*'    => ['required', 'numeric', 'min:0'],
+            'variants.quantity.*' => ['required', 'integer', 'min:0'],
         ]);
 
-        $product->update($req->only('name', 'description', 'category_id'));
+        DB::transaction(function () use ($request, $product) {
 
-        // sync variants
-        $ids = $req->input('variants.id', []);
-        foreach ($req->variants['price'] as $idx => $price) {
-            $data = [
-                'color_id' => $req->variants['color_id'][$idx],
-                'size_id' => $req->variants['size_id'][$idx],
-                'price' => $price,
-                'quantity' => $req->variants['quantity'][$idx],
-            ];
-            if ($ids[$idx]) {
-                ProductVariant::where('id', $ids[$idx])->update($data);
-            } else {
-                $product->variants()->create($data);
+            $product->update($request->only('name', 'description', 'category_id'));
+
+            $ids        = $request->input('variants.id',      []);
+            $colors     = $request->input('variants.color_id');
+            $sizes      = $request->input('variants.size_id');
+            $prices     = $request->input('variants.price');
+            $quantities = $request->input('variants.quantity');
+
+            $keepIds = [];
+
+            foreach ($colors as $idx => $colorId) {
+
+                $data = [
+                    'color_id' => $colorId,
+                    'size_id'  => $sizes[$idx],
+                    'price'    => $prices[$idx],
+                    'quantity' => $quantities[$idx],
+                ];
+
+                if (!empty($ids[$idx])) {
+                    $keepIds[] = $ids[$idx];
+                    $product->variants()
+                        ->where('id', $ids[$idx])
+                        ->update($data);
+                } else {
+                    $new = $product->variants()->create($data);
+                    $keepIds[] = $new->id;
+                }
             }
-        }
-        // حذف واریانت‌هایی که کاربر بر‌داشته
-        $product->variants()->whereNotIn('id', array_filter($ids))->delete();
 
-        return redirect()->back()->with('success', 'محصول ذخیره شد');
+            $product->variants()
+                ->whereNotIn('id', $keepIds)
+                ->delete();
+        });
+
+        return back()->with('success', 'محصول و واریانت‌ها با موفقیت ذخیره شدند.');
     }
 
-    // حذف محصول
+
     public function destroy(Product $product)
     {
         $product->variants()->delete();
