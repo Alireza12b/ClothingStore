@@ -87,8 +87,8 @@
                 </div>
                 <div class="flex items-center space-x-4 space-x-reverse">
                     <div class="flex items-center space-x-2 space-x-reverse">
-                        <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile"
-                            class="w-12 h-8 rounded-full">
+                        <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                            alt="Profile" class="w-12 h-8 rounded-full">
                         <span class="font-medium">{{ auth()->check() ? auth()->user()->name : 'مدیر سیستم' }}</span>
                     </div>
                 </div>

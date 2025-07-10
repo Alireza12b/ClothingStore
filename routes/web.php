@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -26,10 +27,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
 });
+
 Route::middleware(['auth', AdminMiddleware::class])->prefix('/manage')->group(function () {
-    Route::get('/', [AdminController::class, 'show'])->name('manage.show');
-    Route::get('/users', [AdminController::class, 'getAll'])->name('manage.users');
-    Route::put('/users/{user}', [AdminController::class, 'update'])->name('manage.users.update');
-    Route::delete('/users/{user}', [AdminController::class, 'delete'])->name('manage.users.delete');
+    Route::get('/', [AdminUserController::class, 'show'])->name('manage.show');
+    Route::get('/users', [AdminUserController::class, 'getAll'])->name('manage.users');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('manage.users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'delete'])->name('manage.users.delete');
 });
 
+Route::middleware(['auth', AdminMiddleware::class])
+    ->prefix('manage')->name('manage.')->group(function () {
+        Route::get('/products', [AdminProductController::class, 'index'])
+            ->name('products.index');
+        Route::get('/products/{product}/json', [AdminProductController::class, 'showJson'])
+            ->name('products.showJson');   // ajax
+        Route::put('/products/{product}', [AdminProductController::class, 'update'])
+            ->name('products.update');
+        Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])
+            ->name('products.destroy');
+    });
