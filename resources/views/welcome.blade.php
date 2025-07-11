@@ -81,7 +81,7 @@
                     <div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
                         <a href="{{ route('products.show', $product->id) }}">
                             <div class="relative">
-                                <img src="{{ asset('assets/img/' . $product->image ?? 'default.jpg') }}"
+                                <img src="{{ asset('assets/img/products/' . $product->image ?? 'default.jpg') }}"
                                     alt="{{ $product->name }}" class="w-full h-64 object-cover">
                             </div>
                         </a>

@@ -35,14 +35,9 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('/manage')->group(fu
     Route::delete('/users/{user}', [AdminUserController::class, 'delete'])->name('manage.users.delete');
 });
 
-Route::middleware(['auth', AdminMiddleware::class])
-    ->prefix('manage')->name('manage.')->group(function () {
-        Route::get('/products', [AdminProductController::class, 'index'])
-            ->name('products.index');
-        Route::get('/products/{product}/json', [AdminProductController::class, 'showJson'])
-            ->name('products.showJson');   // ajax
-        Route::put('/products/{product}', [AdminProductController::class, 'update'])
-            ->name('products.update');
-        Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])
-            ->name('products.destroy');
-    });
+Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('manage.')->group(function () {
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product}/json', [AdminProductController::class, 'showJson'])->name('products.showJson');
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+});

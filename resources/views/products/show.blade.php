@@ -14,7 +14,7 @@
                 <!-- Image Slider -->
                 <div>
                     <div class="relative w-full overflow-hidden rounded-lg">
-                        <img id="mainImage" src="{{ asset('assets/img/' . ($product->image ?? 'default.jpg')) }}"
+                        <img id="mainImage" src="{{ asset('assets/img/products/' . ($product->image ?? 'default.jpg')) }}"
                             class="w-full h-auto rounded-lg" alt="{{ $product->name }}">
                     </div>
                 </div>
