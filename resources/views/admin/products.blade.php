@@ -6,8 +6,7 @@
         #editProductModal:not(.hidden),
         #deleteProductModal:not(.hidden) {
             display: flex;
-            align-items: center;
-            justify-content: center
+            align-items: justify-content: center
         }
     </style>
 
@@ -26,8 +25,9 @@
 
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead class="bg-gray-50">
+                    <thead c<thead class="bg-gray-50">
                         <tr>
+                            <th class="px-4 py-3">تصویر</th>
                             <th class="px-4 py-3">کد</th>
                             <th class="px-4 py-3">نام</th>
                             <th class="px-4 py-3">دسته</th>
@@ -38,6 +38,14 @@
                     <tbody class="divide-y text-center divide-gray-200">
                         @foreach ($products as $product)
                             <tr>
+                                <td class="px-4 py-3">
+                                    @if ($product->image)
+                                        <img src="{{ asset('assets/img/products/' . $product->image) }}"
+                                            class="h-12 w-12 object-cover rounded" />
+                                    @else
+                                        <span class="text-gray-400">—</span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3">{{ $product->id }}</td>
                                 <td class="px-4 py-3">{{ $product->name }}</td>
                                 <td class="px-4 py-3">{{ $product->category->name ?? '---' }}</td>
@@ -85,7 +93,13 @@
                         <textarea name="description" id="editDesc" rows="3" class="w-full border rounded-lg px-3 py-2"></textarea>
                     </div>
                 </div>
-
+                <div>
+                    <label class="block mb-1 text-sm">تصویر محصول</label>
+                    <div id="currentImagePreview" class="mb-2">
+                        <img src="" id="editCurrentImage" class="w-24 h-24 object-cover rounded shadow" />
+                    </div>
+                    <input type="file" name="image" accept="image/*" class="w-full border rounded-lg px-3 py-2">
+                </div>
                 <h4 class="font-bold mt-6 mb-2">واریانت‌ها</h4>
                 <div id="variantWrapper" class="space-y-3">
                 </div>
@@ -161,6 +175,8 @@
 
             if (v.color_id) div.querySelector('select[name=\"variants[color_id][]\"]').value = v.color_id;
             if (v.size_id) div.querySelector('select[name=\"variants[size_id][]\"]').value = v.size_id;
+            div.querySelector('select[name="variants[color_id][]"]').value = v.color_id;
+            if (v.size_id) div.querySelector('select[name="variants[size_id][]"]').value = v.size_id;
             return div;
         }
 
