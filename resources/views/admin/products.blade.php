@@ -138,6 +138,7 @@
                 document.getElementById('editName').value = p.name;
                 document.getElementById('editDesc').value = p.description || '';
                 document.getElementById('editCategory').value = p.category_id || '';
+                document.getElementById('editCurrentImage').src = p.image ? `/assets/img/products/${p.image}` : '';
                 const wrap = document.getElementById('variantWrapper');
                 wrap.innerHTML = '';
                 p.variants.forEach(v => wrap.appendChild(variantRow(v)));
