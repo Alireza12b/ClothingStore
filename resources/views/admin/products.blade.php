@@ -2,14 +2,6 @@
 @section('title', 'مدیریت محصولات')
 @section('MyContentArea')
 
-    <style>
-        #editProductModal:not(.hidden),
-        #deleteProductModal:not(.hidden) {
-            display: flex;
-            align-items: justify-content: center
-        }
-    </style>
-
     <main class="flex-1 p-6">
         <div class="bg-white rounded-xl shadow-sm p-6">
             <div class="flex justify-between items-center mb-6">
@@ -25,10 +17,10 @@
 
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 text-sm">
-                    <thead c<thead class="bg-gray-50">
+                    <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-3">تصویر</th>
-                            <th class="px-4 py-3">کد</th>
+                            <th class="px-4 py-3">شناسه</th>
                             <th class="px-4 py-3">نام</th>
                             <th class="px-4 py-3">دسته</th>
                             <th class="px-4 py-3">تعداد واریانت</th>
@@ -69,10 +61,11 @@
         </div>
     </main>
 
-    <div id="editProductModal" class="fixed inset-0 z-50 hidden bg-black/40">
+    <!-- Edit Modal -->
+    <div id="editProductModal" class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
             <h3 class="text-lg font-bold mb-4">ویرایش محصول</h3>
-            <form id="editProductForm" method="POST">
+            <form id="editProductForm" method="POST" enctype="multipart/form-data">
                 @csrf @method('PUT')
                 <input type="hidden" name="product_id" id="editProductId">
                 <div class="grid md:grid-cols-2 gap-4">
@@ -94,11 +87,21 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block mb-1 text-sm">تصویر محصول</label>
-                    <div id="currentImagePreview" class="mb-2">
-                        <img src="" id="editCurrentImage" class="w-24 h-24 object-cover rounded shadow" />
+                    <label class="block mb-1 text-sm font-medium text-gray-700">تصویر محصول</label>
+
+                    <div class="flex items-center space-x-4 mb-2 rtl:space-x-reverse">
+                        <img id="editCurrentImage" src="" data-original="" alt="پیش‌نمایش"
+                            class="w-24 h-24 object-cover rounded shadow border border-gray-200 hidden">
+                        <button type="button" id="removeImageBtn" onclick="removeImage()"
+                            class="text-red-500 hover:text-red-700 text-sm hidden">
+                            حذف تصویر
+                        </button>
                     </div>
-                    <input type="file" name="image" accept="image/*" class="w-full border rounded-lg px-3 py-2">
+
+                    <input type="file" name="image" id="editImageInput" accept="image/*"
+                        class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full
+                        file:border-0 file:text-sm file:font-semibold
+                        file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
                 </div>
                 <h4 class="font-bold mt-6 mb-2">واریانت‌ها</h4>
                 <div id="variantWrapper" class="space-y-3">
@@ -114,14 +117,16 @@
         </div>
     </div>
 
-    <div id="deleteProductModal" class="fixed inset-0 z-50 hidden bg-black/40">
+    <!-- Delete Modal -->
+    <div id="deleteProductModal" class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 text-center">
             <h3 class="text-lg font-bold mb-2">حذف محصول</h3>
             <p class="text-sm mb-4">آیا مطمئنید؟</p>
             <form id="deleteProductForm" method="POST">
                 @csrf @method('DELETE')
                 <div class="flex justify-center space-x-2 space-x-reverse">
-                    <button type="button" onclick="closeDelete()" class="px-4 py-2 bg-gray-100 rounded-lg">انصراف</button>
+                    <button type="button" onclick="closeDelete()"
+                        class="px-4 py-2 bg-gray-100 rounded-lg">انصراف</button>
                     <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg">حذف</button>
                 </div>
             </form>
@@ -138,13 +143,24 @@
                 document.getElementById('editName').value = p.name;
                 document.getElementById('editDesc').value = p.description || '';
                 document.getElementById('editCategory').value = p.category_id || '';
-                document.getElementById('editCurrentImage').src = p.image ? `/assets/img/products/${p.image}` : '';
+
+                const imagePath = p.image ? `/assets/img/products/${p.image}` : '';
+                const imagePreview = document.getElementById('editCurrentImage');
+
+                imagePreview.src = imagePath;
+                imagePreview.setAttribute('data-original', imagePath);
+                imagePreview.classList.toggle('hidden', !p.image);
+                document.getElementById('removeImageBtn').classList.toggle('hidden', !p.image);
+
+                document.getElementById('editImageInput').value = "";
+
                 const wrap = document.getElementById('variantWrapper');
                 wrap.innerHTML = '';
                 p.variants.forEach(v => wrap.appendChild(variantRow(v)));
                 document.getElementById('editProductModal').classList.remove('hidden');
             });
         }
+
 
         function closeEdit() {
             document.getElementById('editProductModal').classList.add('hidden');
@@ -161,7 +177,7 @@
 
         function variantRow(v = {}) {
             const div = document.createElement('div');
-            div.className = 'grid grid-cols-6 gap-2';
+            div.className = 'p-3 bg-gray-50 rounded-lg grid grid-cols-6 gap-2 items-center';
             div.innerHTML = `
                 <input type="hidden" name="variants[id][]" value="${v.id||''}">
                 <select name="variants[color_id][]" class="border rounded px-2 py-1">
@@ -183,6 +199,41 @@
 
         function addVariantRow() {
             document.getElementById('variantWrapper').appendChild(variantRow());
+        }
+
+        const imageInput = document.getElementById('editImageInput');
+        const imagePreview = document.getElementById('editCurrentImage');
+        const removeBtn = document.getElementById('removeImageBtn');
+
+        imageInput?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    imagePreview.src = reader.result;
+                    imagePreview.classList.remove('hidden');
+                    removeBtn.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function removeImage() {
+            const imageInput = document.getElementById('editImageInput');
+            const imagePreview = document.getElementById('editCurrentImage');
+            const original = imagePreview.getAttribute('data-original');
+
+            if (original) {
+                imagePreview.src = original;
+                imageInput.value = "";
+                imagePreview.classList.remove('hidden');
+                document.getElementById('removeImageBtn').classList.remove('hidden');
+            } else {
+                imagePreview.src = "";
+                imageInput.value = "";
+                imagePreview.classList.add('hidden');
+                document.getElementById('removeImageBtn').classList.add('hidden');
+            }
         }
     </script>
 @endsection

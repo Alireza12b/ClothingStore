@@ -62,7 +62,12 @@ class AdminProductController extends Controller
                 $product->image = $this->saveProductImage($request->file('image'));
             }
 
-            $product->update($request->only('name', 'description', 'category_id', 'image'));
+            $updateData = $request->only('name', 'description', 'category_id');
+            if ($request->hasFile('image')) {
+                $this->deleteProductImage($product->image);
+                $updateData['image'] = $this->saveProductImage($request->file('image'));
+            }
+            $product->update($updateData);
 
             $ids        = $request->input('variants.id', []);
             $colors     = $request->input('variants.color_id');
