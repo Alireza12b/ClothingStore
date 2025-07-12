@@ -16,7 +16,7 @@
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->id) }}">
                     <div class="border rounded-lg overflow-hidden shadow hover:shadow-md transition">
-                        <img src="{{ asset('assets/img/product/' . ($product->image ?? 'default.jpg')) }}" class="w-full h-48 object-cover" alt="{{ $product->name }}">
+                        <img src="{{ asset('assets/img/products/' . ($product->image ?? 'default.jpg')) }}" class="w-full h-48 object-cover" alt="{{ $product->name }}">
                         <div class="p-4 text-right">
                             <h3 class="font-semibold text-lg text-gray-800">{{ $product->name }}</h3>
                             <p class="text-sm font-bold text-gray-650">{{ $product->category->name }}</p>

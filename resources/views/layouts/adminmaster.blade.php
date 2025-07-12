@@ -102,6 +102,11 @@
                 <div class="p-4">
                     <nav class="mt-6">
                         <div class="space-y-2">
+                            <a href="/"
+                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
+                                <i class="fas fa-house"></i>
+                                <span>خانه</span>
+                            </a>
                             <a href="/manage/users"
                                 class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
                                 <i class="fas fa-users"></i>
