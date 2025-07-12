@@ -40,4 +40,5 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('man
     Route::get('/products/{product}/json', [AdminProductController::class, 'showJson'])->name('products.showJson');
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+    Route::post('/products', [AdminProductController::class, 'create'])->name('products.create');
 });

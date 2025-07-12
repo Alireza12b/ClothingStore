@@ -6,6 +6,9 @@
         <div class="bg-white rounded-xl shadow-sm p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-bold">لیست محصولات</h2>
+                <button onclick="openCreate()" class="bg-primary-500 text-white px-4 py-2 rounded-lg shadow">
+                    + محصول جدید
+                </button>
                 <form method="GET" action="{{ route('manage.products.index') }}">
                     <div class="relative">
                         <input name="search" value="{{ request('search') }}" type="text" placeholder="جستجوی محصول..."
@@ -116,6 +119,55 @@
             </form>
         </div>
     </div>
+
+    <!-- Create Modal -->
+    <div id="createProductModal" class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
+            <h3 class="text-lg font-bold mb-4">ایجاد محصول جدید</h3>
+            <form id="createProductForm" method="POST" action="{{ route('manage.products.create') }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1 text-sm">نام</label>
+                        <input name="name" class="w-full border rounded-lg px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm">دسته</label>
+                        <select name="category_id" class="w-full border rounded-lg px-3 py-2">
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block mb-1 text-sm">توضیحات</label>
+                        <textarea name="description" rows="3" class="w-full border rounded-lg px-3 py-2"></textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700">تصویر محصول</label>
+                    <input type="file" name="image" accept="image/*"
+                        class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full
+                    file:border-0 file:text-sm file:font-semibold
+                    file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
+                </div>
+
+                <h4 class="font-bold mt-6 mb-2">واریانت‌ها</h4>
+                <div id="createVariantWrapper" class="space-y-3"></div>
+                <button type="button" onclick="addCreateVariantRow()"
+                    class="mt-2 px-3 py-1 bg-primary-100 text-primary-700 rounded">+ واریانت جدید</button>
+
+                <div class="flex justify-end mt-6 space-x-2 space-x-reverse">
+                    <button type="button" onclick="closeCreate()"
+                        class="px-4 py-2 bg-gray-100 rounded-lg">انصراف</button>
+                    <button type="submit" class="px-4 py-2 bg-primary-500 text-white rounded-lg">ذخیره</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <!-- Delete Modal -->
     <div id="deleteProductModal" class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center">
@@ -234,6 +286,34 @@
                 imagePreview.classList.add('hidden');
                 document.getElementById('removeImageBtn').classList.add('hidden');
             }
+        }
+
+        function openCreate() {
+            document.getElementById('createProductModal').classList.remove('hidden');
+        }
+
+        function closeCreate() {
+            document.getElementById('createProductModal').classList.add('hidden');
+        }
+
+        function createVariantRow() {
+            const div = document.createElement('div');
+            div.className = 'p-3 bg-gray-50 rounded-lg grid grid-cols-6 gap-2 items-center';
+            div.innerHTML = `
+        <select name="variants[color_id][]" class="border rounded px-2 py-1">
+            @foreach ($colors as $c)<option value="{{ $c->id }}">{{ $c->name }}</option>@endforeach
+        </select>
+        <select name="variants[size_id][]" class="border rounded px-2 py-1">
+            @foreach ($sizes as $s)<option value="{{ $s->id }}">{{ $s->name }}</option>@endforeach
+        </select>
+        <input name="variants[price][]" type="number" class="border rounded px-2 py-1" placeholder="قیمت">
+        <input name="variants[quantity][]" type="number" class="border rounded px-2 py-1" placeholder="موجودی">
+        <button type="button" onclick="this.parentElement.remove()" class="text-red-600">حذف</button>`;
+            return div;
+        }
+
+        function addCreateVariantRow() {
+            document.getElementById('createVariantWrapper').appendChild(createVariantRow());
         }
     </script>
 @endsection

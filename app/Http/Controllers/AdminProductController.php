@@ -100,6 +100,52 @@ class AdminProductController extends Controller
         return back()->with('success', 'محصول و تصویر با موفقیت ویرایش شدند.');
     }
 
+    public function create(Request $request)
+    {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => ['nullable', Rule::exists('categories', 'id')],
+            'image'       => 'nullable|image|max:2048',
+
+            'variants.color_id'  => 'required|array',
+            'variants.size_id'   => 'required|array',
+            'variants.price'     => 'required|array',
+            'variants.quantity'  => 'required|array',
+
+            'variants.color_id.*' => ['required', Rule::exists('colors', 'id')],
+            'variants.size_id.*'  => ['required', Rule::exists('sizes', 'id')],
+            'variants.price.*'    => ['required', 'numeric', 'min:0'],
+            'variants.quantity.*' => ['required', 'integer', 'min:0'],
+        ]);
+
+        DB::transaction(function () use ($request) {
+            $data = $request->only('name', 'description', 'category_id');
+
+            if ($request->hasFile('image')) {
+                $data['image'] = $this->saveProductImage($request->file('image'));
+            }
+
+            $product = Product::create($data);
+
+            $colors     = $request->input('variants.color_id');
+            $sizes      = $request->input('variants.size_id');
+            $prices     = $request->input('variants.price');
+            $quantities = $request->input('variants.quantity');
+
+            foreach ($colors as $i => $colorId) {
+                $product->variants()->create([
+                    'color_id' => $colorId,
+                    'size_id'  => $sizes[$i],
+                    'price'    => $prices[$i],
+                    'quantity' => $quantities[$i],
+                ]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'محصول با موفقیت ایجاد شد.');
+    }
+
 
     public function destroy(Product $product)
     {
