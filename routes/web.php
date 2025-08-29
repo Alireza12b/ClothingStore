@@ -14,6 +14,9 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, "index"]);
+Route::get('/about-us', function () {
+    return view('about');
+})->name('about-us');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/category/{id}', [CategoryController::class, 'show'])->name('category.products');
@@ -37,7 +40,6 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('/manage')->group(fu
     Route::get('/users', [AdminUserController::class, 'getAll'])->name('manage.users');
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('manage.users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'delete'])->name('manage.users.delete');
-
 });
 
 Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('manage.')->group(function () {
