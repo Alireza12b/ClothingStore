@@ -117,6 +117,11 @@
                                 <i class="fas fa-chart-line"></i>
                                 <span>مدیریت محصولات</span>
                             </a>
+                            <a href="/manage/contacts"
+                                class="flex items-center space-x-3 space-x-reverse p-3 rounded-lg text-gray-600 hover:bg-gray-100">
+                                <i class="fas fa-envelope"></i>
+                                <span>مدیریت تماس ها</span>
+                            </a>
                         </div>
                     </nav>
                 </div>

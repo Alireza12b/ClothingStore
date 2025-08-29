@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminContactController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -21,6 +23,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::put('/me', [UserController::class, 'update'])->name('user.update')->middleware('auth');
+Route::get('/contact-us', [ContactController::class, 'showForm'])->name('contact.show');
+Route::post('/contact-us', [ContactController::class, 'submitForm'])->name('contact.submit');
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -33,6 +37,7 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('/manage')->group(fu
     Route::get('/users', [AdminUserController::class, 'getAll'])->name('manage.users');
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('manage.users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'delete'])->name('manage.users.delete');
+
 });
 
 Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('manage.')->group(function () {
@@ -41,4 +46,8 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('man
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
     Route::post('/products', [AdminProductController::class, 'create'])->name('products.create');
+});
+
+Route::middleware(['auth', AdminMiddleware::class])->prefix('manage')->name('manage.')->group(function () {
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
 });
