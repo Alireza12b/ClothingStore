@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="{{ asset('assets/img/696302cd-0ebb-48ed-a6a0-e5c210042800.png') }}" class="img-fluid rounded shadow" alt="فروشگاه لباس">
+                <img src="{{ asset('assets/img/696302cd-0ebb-48ed-a6a0-e5c210042800.png') }}" class="img-fluid rounded shadow" alt="فروشگاه لباس">  
             </div>
             <div class="col-md-6">
                 <h2 class="fw-bold mb-4">درباره ما</h2>
